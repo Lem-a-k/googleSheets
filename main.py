@@ -3,11 +3,10 @@ import numpy as np
 import keras
 from keras.models import load_model
 from keras.preprocessing.text import Tokenizer
+from sklearn.preprocessing import LabelEncoder
 
 import os
 from flask import Flask
-
-
 
 app = Flask(__name__)
 
