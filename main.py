@@ -23,8 +23,7 @@ def predict(text):
     tokenizer = Tokenizer(num_words=1000)
     encoder = LabelEncoder()
     encoder.fit(Y)
-    encoded_Y = encoder.transform(Y)
-    #Y = to_categorical(encoded_Y, num_classes)
+    encoder.transform(Y)
     X_new = [text]
     tokenizer.fit_on_texts(X)
     x_test = tokenizer.texts_to_matrix(X_new, mode='binary')
