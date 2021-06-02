@@ -18,19 +18,19 @@ classes = { 'МАОУ "Гимназия № 108"': 0, 'МАОУ "Гимнази�
 def predict(text):
     df = pd.read_excel('dataset3new.xlsx', header=None, names=['inputname', 'schoolname']).astype(str)
     X = df['inputname'].values
+    Y = df['schoolname'].values
     tokenizer = Tokenizer(num_words=1000)
+    encoder = LabelEncoder()
+    encoder.fit(Y)
     X_new = [text]
     tokenizer.fit_on_texts(X)
     x_test = tokenizer.texts_to_matrix(X_new, mode='binary')
     prediction = model.predict(np.array(x_test))
     classnumber = np.argmax(prediction[0])
-    #return (', '.join(encoder.inverse_transform([classnumber])))
-    for name, index in classes.items():
-        if index == classnumber:
-          return(name)
-
-#def index(text):
-#    return 'schoolX'
+    return (', '.join(encoder.inverse_transform([classnumber])))
+    #for name, index in classes.items():
+        #if index == classnumber:
+          #return(name)
 
 def main():
     if 'HEROKU' in os.environ:
