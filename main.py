@@ -11,6 +11,7 @@ from flask import Flask
 app = Flask(__name__)
 
 df = pd.read_excel('dataset3new.xlsx', header=None, names=['inputname', 'schoolname']).astype(str)
+num_classes = len(df['schoolname'].drop_duplicates())
 X = df['inputname'].values
 Y = df['schoolname'].values
 
@@ -22,6 +23,8 @@ def predict(text):
     tokenizer = Tokenizer(num_words=1000)
     encoder = LabelEncoder()
     encoder.fit(Y)
+    encoded_Y = encoder.transform(Y)
+    Y = to_categorical(encoded_Y, num_classes)
     X_new = [text]
     tokenizer.fit_on_texts(X)
     x_test = tokenizer.texts_to_matrix(X_new, mode='binary')
